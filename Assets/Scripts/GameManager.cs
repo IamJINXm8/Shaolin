@@ -15,23 +15,23 @@ public class GameManager : MonoBehaviour {
     public int numberOfBricks;
 
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start() {
         livesText.text = "Lives: " + lives;
         scoreText.text = "Score: " + score;
         numberOfBricks = GameObject.FindGameObjectsWithTag("Brick").Length;
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
+    }
+
+    // Update is called once per frame
+    void Update() {
+
+    }
     public void UpdateLives(int changeInLives) {
         lives += changeInLives;
 
         //no lives left and trigger end of game
-        if(lives <= 0)
+        if (lives <= 0)
         {
             lives = 0;
             GameOver();
@@ -43,6 +43,15 @@ public class GameManager : MonoBehaviour {
     {
         score += points;
         scoreText.text = "Score: " + score;
+    }
+
+    public void UpdateNumberOfBricks()
+    {
+        numberOfBricks--;
+        if(numberOfBricks <= 0)
+        {
+            GameOver();
+        }
     }
 
     void GameOver() {

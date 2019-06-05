@@ -10,9 +10,11 @@ public class Ball_Script : MonoBehaviour {
     public float speed;
     public Transform explosion;
     public GameManager gm;
+    public Transform extraLifePowerUp;
+    public Transform speedPowerUp;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         rb = GetComponent<Rigidbody2D>();
 
         
@@ -33,25 +35,50 @@ public class Ball_Script : MonoBehaviour {
             rb.AddForce(Vector2.up * speed); }
 		
 	}
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Bottom")) { Debug.Log("ball hit the bottom of the screen"); }
+        if (collision.CompareTag("Bottom"))
+        {
+            Debug.Log("ball hit the bottom of the screen");
 
-        rb.velocity = Vector2.zero;
-        inPlay = false;
-        gm.UpdateLives(-1);
+            rb.velocity = Vector2.zero;
+            inPlay = false;
+            gm.UpdateLives(-1);
+
+
+
+        }
+       
     }
+    
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.transform.CompareTag("Brick")) { 
+        if (collision.transform.CompareTag("Brick"))
+        {
+            int randChance = Random.Range(1, 101);
+            if (randChance < 20)
+            {
+               Instantiate(extraLifePowerUp, collision.transform.position, collision.transform.rotation);
+               
+            }
+            if (randChance > 80)
+            {
+                
+                Instantiate(speedPowerUp, collision.transform.position, collision.transform.rotation);
+            }
 
-        Transform newExplosion = Instantiate(explosion, collision.transform.position, collision.transform.rotation);
+            Transform newExplosion = Instantiate(explosion, collision.transform.position, collision.transform.rotation);
 
             Destroy(newExplosion.gameObject, 2.5f);
 
             gm.UpdateScore(collision.gameObject.GetComponent<Brick_Script>().points);
+            gm.UpdateNumberOfBricks();
 
-        Destroy(collision.gameObject); }
+            Destroy(collision.gameObject);
+        }
     }
+
+
 }

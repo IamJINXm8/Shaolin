@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Bottom
   - Brick
+  - ExtraLifePowerup
+  - SpeedPowerup
   layers:
   - Default
   - TransparentFX

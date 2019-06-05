@@ -5,9 +5,11 @@ using UnityEngine;
 public class Platform_Script : MonoBehaviour {
 
     public float speed;
+    public float speedUp;
     public float rightScreenEdge;
     public float leftScreenEdge;
     public GameManager gm;
+    
 
 	// Use this for initialization
 	void Start () {
@@ -31,6 +33,29 @@ public class Platform_Script : MonoBehaviour {
         {
             transform.position = new Vector2(rightScreenEdge, transform.position.y);
         }
+        
+    }
 
+
+    public void Updatespeed()
+    {
+        speed = speed + speedUp;
+    }
+
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+
+        if (collision.CompareTag("ExtraLifePowerup"))
+        {
+            gm.UpdateLives(1);
+            Destroy(collision.gameObject);
+        }
+        if (collision.CompareTag("SpeedPowerup"))
+        {
+            Debug.Log("touched the speed");
+            Updatespeed();
+            Destroy(collision.gameObject);
+        }
     }
 }
