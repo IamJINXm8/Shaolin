@@ -11,8 +11,13 @@ public class GameManager : MonoBehaviour {
     public Text livesText;
     public Text scoreText;
     public bool gameOver;
+    public bool win;
     public GameObject gameOverPanel;
+    public GameObject loadingPanel;
+    public GameObject winPanel;
     public int numberOfBricks;
+    public Transform[] levels;
+    public int currentLevelIndex = 0;
 
 
     // Use this for initialization
@@ -50,15 +55,45 @@ public class GameManager : MonoBehaviour {
         numberOfBricks--;
         if(numberOfBricks <= 0)
         {
-            GameOver();
+          if(currentLevelIndex >= levels.Length - 1)
+            {
+                Win();
+            } else
+            {
+                gameOver = true;
+                loadingPanel.SetActive(true);
+                Invoke("LoadLevel",3f);
+                
+
+            }
+          
         }
     }
 
-    void GameOver() {
+    void LoadLevel()
+    {
+        currentLevelIndex++;
+        Instantiate(levels[currentLevelIndex], Vector2.zero, Quaternion.identity);
+        numberOfBricks = GameObject.FindGameObjectsWithTag("Brick").Length;
+        gameOver = false;
+        loadingPanel.SetActive(false);
+
+    }
+
+    
+    void Win()
+    {
+        win = true;
+        winPanel.SetActive(true);
+
+    }
+    void GameOver()
+    {
         gameOver = true;
         gameOverPanel.SetActive(true);
 
     }
+   
     public void PlayAgain()
     {
         SceneManager.LoadScene("Shaolin");

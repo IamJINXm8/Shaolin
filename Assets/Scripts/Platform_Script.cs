@@ -40,6 +40,10 @@ public class Platform_Script : MonoBehaviour {
     public void Updatespeed()
     {
         speed = speed + speedUp;
+        if (speed > 15);
+        {
+            speed = 15;
+        }
     }
 
 
