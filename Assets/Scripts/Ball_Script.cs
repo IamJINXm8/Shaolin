@@ -12,13 +12,13 @@ public class Ball_Script : MonoBehaviour {
     public GameManager gm;
     public Transform extraLifePowerUp;
     public Transform speedPowerUp;
+    AudioSource audio;
 
     // Use this for initialization
     void Start () {
         rb = GetComponent<Rigidbody2D>();
-
+        audio = GetComponent<AudioSource>();
         
-		
 	}
 	
 	// Update is called once per frame
@@ -86,7 +86,10 @@ public class Ball_Script : MonoBehaviour {
 
                 Destroy(collision.gameObject);
             }
+
+            audio.Play();
         }
+
     }
 
 
